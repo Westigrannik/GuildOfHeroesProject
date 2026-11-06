@@ -1,8 +1,20 @@
 public class Game {
-    public string Name;
-    public string Category;
-    public int Year;
-    public int Rating;
+    private string _name = "Неизвестная игра";
+    public string Name {
+        get {
+        return _name;
+    }
+        private set {
+        if (string.IsNullOrWhiteSpace(value)) {
+            _name = "Неизвестная игра";
+            return;
+        }
+        _name = value.Trim();
+    }
+}
+    public string Category { get; private set; }
+    public int Year { get; private set; }
+    public int Rating { get; private set; }
 
     public Game(string name, string category, int year) {
         Name = name;
