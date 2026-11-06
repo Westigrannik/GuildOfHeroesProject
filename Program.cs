@@ -3,24 +3,20 @@ Game Ferma = new Game("Весёлая ферма", "time management", 2007);
 Game SSFE = new Game("Serious Sam First Encounter", "Shooter", 2001);
 
 
-Console.WriteLine(">>> Игра 1 <<<");
-Console.WriteLine($"Название: {Undertale.Name}");
-Console.WriteLine($"Категория: {Undertale.Category}");
-Console.WriteLine($"Год выпуска: {Undertale.Year}");
-Console.WriteLine($"Рейтинг: {Undertale.Rating}");
 
+Console.WriteLine(Undertale.GetInfo());
+Console.WriteLine();
+Console.WriteLine(Ferma.GetInfo());
+Console.WriteLine();
+Console.WriteLine(SSFE.GetInfo());
 Console.WriteLine();
 
-Console.WriteLine(">>> Игра 2 <<<");
-Console.WriteLine($"Название: {Ferma.Name}");
-Console.WriteLine($"Категория: {Ferma.Category}");
-Console.WriteLine($"Год выпуска: {Ferma.Year}");
-Console.WriteLine($"Рейтинг: {Ferma.Rating}");
+Undertale.Rate(10);
+Ferma.Rate(-10);
+SSFE.Rate(100);
 
+Console.WriteLine(Undertale.GetInfo());
 Console.WriteLine();
-
-Console.WriteLine(">>> Игра 3 <<<");
-Console.WriteLine($"Название: {SSFE.Name}");
-Console.WriteLine($"Категория: {SSFE.Category}");
-Console.WriteLine($"Год выпуска: {SSFE.Year}");
-Console.WriteLine($"Рейтинг: {SSFE.Rating}");
+Console.WriteLine(Ferma.GetInfo());
+Console.WriteLine();
+Console.WriteLine(SSFE.GetInfo());
