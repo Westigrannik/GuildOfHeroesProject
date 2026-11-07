@@ -2,21 +2,39 @@
 Game Ferma = new Game("Весёлая ферма", "time management", 2007);
 Game SSFE = new Game("Serious Sam First Encounter", "Shooter", 2001);
 
+Catalog catalog = new Catalog("Библиотека Staem");
 
+catalog.Games.Add(Undertale);
+catalog.Games.Add(Ferma);
+catalog.Games.Add(SSFE);
 
-Console.WriteLine(Undertale.GetInfo());
-Console.WriteLine();
-Console.WriteLine(Ferma.GetInfo());
-Console.WriteLine();
-Console.WriteLine(SSFE.GetInfo());
-Console.WriteLine();
+if (catalog.Games.Count > 0) {
+    Console.WriteLine($"Первая игра: {catalog.Games[0].Name}");
+    Console.WriteLine($"Последняя игра: {catalog.Games[catalog.Games.Count - 1].Name}");
+}
 
-Undertale.Rate(10);
-Ferma.Rate(-10);
-SSFE.Rate(100);
+foreach (Game game in catalog.Games)
+{
+    Console.WriteLine(game.GetInfo());
+    Console.WriteLine();
+}
 
-Console.WriteLine(Undertale.GetInfo());
-Console.WriteLine();
-Console.WriteLine(Ferma.GetInfo());
-Console.WriteLine();
-Console.WriteLine(SSFE.GetInfo());
+Game ETG = new Game("Enter The Gungeon", "Roguelike", 2016);
+catalog.Games.Add(ETG);
+
+Console.WriteLine($"Первая игра: {catalog.Games[0].Name}");
+Console.WriteLine($"Последняя игра: {catalog.Games[catalog.Games.Count - 1].Name}");
+
+int cc = 0;
+foreach (Game game in catalog.Games)
+{
+    if (game.Year > 2010) { cc++; }
+}
+Console.WriteLine($"Количество игр, которые вышли позже 2010: {cc}");
+
+Undertale.Rate(11);
+foreach (Game game in catalog.Games)
+{
+    Console.WriteLine(game.GetInfo());
+    Console.WriteLine();
+}
