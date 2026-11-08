@@ -23,12 +23,20 @@ public class Game {
         Rating = 1;
     }
 // ||||| Рейтинг
+    public bool canRate(int rt){
+        if ((Rating + rt > 100) || (Rating + rt <= 0)) {
+            return false;
+        }
+        return true;
+        }
+
     public void Rate(int rt){
-        if ((Rating + rt > 100) || (Rating + rt < 0)) {
+        if (!canRate(rt)) {
             return;
         }
         Rating += rt;
     }
+
 // ||||| Инфа
     public string GetInfo(){
         return $">>> {Name} <<<\n" +

@@ -11,47 +11,29 @@ catalog.AddGame(SSFE);
 catalog.AddGame(ETG);
 List<Game> Folder = catalog.GetGames();
 
-if (Folder.Count > 0) {
-    Console.WriteLine($"Первая игра: {Folder[0].Name}");
-    Console.WriteLine($"Последняя игра: {Folder[Folder.Count - 1].Name}");
+// foreach (Game game in Folder)
+// {
+//     Console.WriteLine(game.GetInfo());
+//     Console.WriteLine();
+// }
+
+ReviewBlock block = new ReviewBlock(catalog);
+Review IGN = new Review(1, "Ревью от Игрового журналиста", 20);
+Console.WriteLine($"Ревью добавлено: {block.AddReview(IGN)}");
+Console.WriteLine($">>> №{IGN.Id}: {IGN.Title} <<<");
+
+Console.WriteLine($"Назначение Андертейла: {block.TryAssign(1, " undertale ")}");
+Game? assigned = IGN.AssignedGame;
+if (assigned != null) {
+    Console.WriteLine($"Исполнитель: {assigned.Name}");
 }
+Console.WriteLine($"Рейтинг после назначения: {Undertale.Rating}");
 
-foreach (Game game in Folder)
-{
-    Console.WriteLine(game.GetInfo());
-    Console.WriteLine();
-}
-
-// |||||||||
-
-Game? found = catalog.FindGame(" UNDERtale ");
-if (found != null) {
-    Console.WriteLine($"Найдена игра по запросу « UNDERtale »: {found.Name}");
-} else {
-    Console.WriteLine("По запросу « UNDERtale » ничего нет.");
-}
-
-Game? found1 = catalog.FindGame(" volgu ");
-if (found1 != null) {
-    Console.WriteLine($"Найдена игра по запросу « volgu »: {found1.Name}");
-} else {
-    Console.WriteLine("По запросу « volgu » ничего нет.");
-}
-
+Console.WriteLine($"Завершение: {block.TryWin(1)}");
+Console.WriteLine($"Опыт после завершения: {Undertale.Rating}");
+Console.WriteLine($"Повторное завершение: {block.TryWin(1)}");
+Console.WriteLine($"Опыт после повтора: {Undertale.Rating}");
 Console.WriteLine();
 
-catalog.AddGame(ETG);
-Console.WriteLine(catalog.RemoveGame("Волгу"));
-Console.WriteLine(catalog.GameCount);
-
-// |||||||||
-
-Console.WriteLine($"Первая игра: {Folder[0].Name}");
-Console.WriteLine($"Последняя игра: {Folder[Folder.Count - 1].Name}");
-Console.WriteLine($"Количество игр, которые вышли позже 2010: {catalog.CountByYear(2010)}");
-
-foreach (Game game in Folder)
-{
-    Console.WriteLine(game.GetInfo());
-    Console.WriteLine();
-}
+Console.WriteLine(IGN.GetInfo());
+Console.WriteLine(Undertale.GetInfo());
