@@ -7,6 +7,10 @@ public class ReviewBlock {
     }
 
     public bool AddReview(Review review) {
+        if (review.Status != ReviewStatus.Open) {
+            return false;
+        }
+
         if (FindReview(review.Id) != null) {
             return false;
         }
@@ -34,8 +38,38 @@ public class ReviewBlock {
         return false;
     }
 
+    if (IsAssigned(game)) {
+    return false;
+    }
     return review.TryAssign(game);
+    }
+
+    public bool IsAssigned(Game game) {
+    foreach (Review review in _review) {
+        if (review.Status == ReviewStatus.Assigned && review.AssignedGame == game) {
+            return true;
+        }
+    }
+    return false;
+    }
+
+    public bool TryRemoveGame(string gameName) {
+    Game? game = _catalog.FindGame(gameName);
+    if (game == null) {
+        return false;
+    }
+
+    foreach (Review review in _review) {
+        if (review.AssignedGame == game) {
+            return false;
+        }
+    }
+
+    return _catalog.RemoveGame(game.Name);
 }
+
+
+
 
 public bool TryWin(int review_Id) {
     Review? review = FindReview(review_Id);
@@ -44,5 +78,18 @@ public bool TryWin(int review_Id) {
     }
     return review.TryWin();
 }
+
+public bool TryCancel(int Rid) {
+    Review? review = FindReview(Rid);
+    if (review == null) {
+        return false;
+    }
+    return review.TryCancel();
+}
+
+public List<Review> GetReviews() {
+    return new List<Review>(_review);
+}
+
 }
 

@@ -18,22 +18,12 @@ List<Game> Folder = catalog.GetGames();
 // }
 
 ReviewBlock block = new ReviewBlock(catalog);
-Review IGN = new Review(1, "Ревью от Игрового журналиста", 20);
-Console.WriteLine($"Ревью добавлено: {block.AddReview(IGN)}");
-Console.WriteLine($">>> №{IGN.Id}: {IGN.Title} <<<");
+Review review1 = new Review(1, "Ревью от Игрового журналиста", 20);
+Review review2 = new Review(2, "Обзор от стримера", 50);
+block.AddReview(review1);
+block.AddReview(review2);
 
-Console.WriteLine($"Назначение Андертейла: {block.TryAssign(1, " undertale ")}");
-Game? assigned = IGN.AssignedGame;
-if (assigned != null) {
-    Console.WriteLine($"Исполнитель: {assigned.Name}");
-}
-Console.WriteLine($"Рейтинг после назначения: {Undertale.Rating}");
-
-Console.WriteLine($"Завершение: {block.TryWin(1)}");
-Console.WriteLine($"Опыт после завершения: {Undertale.Rating}");
-Console.WriteLine($"Повторное завершение: {block.TryWin(1)}");
-Console.WriteLine($"Опыт после повтора: {Undertale.Rating}");
-Console.WriteLine();
-
-Console.WriteLine(IGN.GetInfo());
-Console.WriteLine(Undertale.GetInfo());
+Console.WriteLine($"Ревью 1: {block.TryAssign(1, "Undertale")}");
+Console.WriteLine($"Ревью 2: {block.TryAssign(2, "Undertale")}");
+block.TryCancel(1);
+Console.WriteLine($"Ревью 2 (после отмены первого): {block.TryAssign(2, "Undertale")}");

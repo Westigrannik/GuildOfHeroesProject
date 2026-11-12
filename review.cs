@@ -3,7 +3,7 @@ public class Review {
     public string Title { get; private set; }
     public int WinRate { get; private set; }
     public Game? AssignedGame { get; private set; }
-    public bool IsSuccessfull { get; private set; }
+    public ReviewStatus Status { get; private set; }
 
     public Review(int id, string title, int winrate) {
         Id = id;
@@ -20,12 +20,12 @@ public class Review {
         }
 
         AssignedGame = null;
-        IsSuccessfull = false;
+        Status = ReviewStatus.Open;
     }
 
 
 public bool TryAssign(Game game) {
-    if (IsSuccessfull) {
+    if (Status != ReviewStatus.Open) {
         return false;
     }
     if (AssignedGame != null) {
@@ -33,11 +33,12 @@ public bool TryAssign(Game game) {
     }
 
     AssignedGame = game;
+    Status = ReviewStatus.Assigned;
     return true;
 }
 
 public bool TryWin() { // ЭТО ЯВЛЯЕТСЯ TRYFINISH
-    if (IsSuccessfull) {
+    if (Status != ReviewStatus.Assigned) {
         return false;
     }
     Game? game = AssignedGame;
@@ -55,9 +56,35 @@ public bool TryWin() { // ЭТО ЯВЛЯЕТСЯ TRYFINISH
     }
 
     game.Rate(WinRate);
-    IsSuccessfull = true;
+    Status = ReviewStatus.Done;
+    return true;
+    }
+
+    public bool TryCancel() {
+    if (Status != ReviewStatus.Open && Status != ReviewStatus.Assigned) {
+        return false;
+    }
+
+    Status = ReviewStatus.Cancelled;
     return true;
 }
+
+
+    public string GetStatusText() {
+    switch (Status) {
+        case ReviewStatus.Open:
+            return "открыто";
+        case ReviewStatus.Assigned:
+            return "назначено";
+        case ReviewStatus.Done:
+            return "Прошло";
+        case ReviewStatus.Cancelled:
+            return "отменено";
+        default:
+            return "неизвестно";
+        }
+    }   
+
 
     // пусть гетифно тоже будет тут \/ \/ \/
     public string GetInfo() {
@@ -65,12 +92,8 @@ public bool TryWin() { // ЭТО ЯВЛЯЕТСЯ TRYFINISH
         if (AssignedGame != null) {
             text = AssignedGame.Name;
         }
-        string textcomplete = "нет";
-        if (IsSuccessfull) {
-            textcomplete = "да";
-        }
 
-        return $"№{Id} «{Title}»: Игра {text}, Прошла проверку: {textcomplete}";
+        return $"№{Id} «{Title}»: Игра {text}: {GetStatusText()}";
     }
 
 
